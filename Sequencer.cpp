@@ -3,7 +3,7 @@
 //
 
 #include "Sequencer.hpp"
-bool Sequencer::exists(const std::string &name)
+auto Sequencer::exists(const std::string &name) -> bool
 {
     return sequences.count(name) > 0;
 }

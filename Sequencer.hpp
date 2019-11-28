@@ -14,7 +14,7 @@ using namespace std;
 
 class Sequencer {
 public:
-    bool exists (const string& name);
+    auto exists (const string& name) -> bool;
 
     template <typename SeqType, typename... Args>
     auto constructAndAdd(const string& name, Args&&... args) -> shared_ptr<SeqType>
