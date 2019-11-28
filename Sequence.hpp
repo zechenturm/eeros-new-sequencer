@@ -7,7 +7,8 @@
 
 
 class Sequence {
-    virtual void action() = 0;
+public:
+    virtual void action() {}
 };
 
 
