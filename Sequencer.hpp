@@ -10,18 +10,22 @@
 #include <map>
 #include "Sequence.hpp"
 
+using namespace std;
+
 class Sequencer {
 public:
-    bool exists (const std::string& name);
+    bool exists (const string& name);
 
     template <typename SeqType, typename... Args>
-    auto constructAndAdd(std::string name, Args&&... args) -> std::shared_ptr<SeqType>
+    auto constructAndAdd(const string& name, Args&&... args) -> shared_ptr<SeqType>
     {
-        sequences.emplace(std::pair<std::string, std::shared_ptr<SeqType>>{name, std::shared_ptr<SeqType>(std::forward(args)...)});
+        auto ptr = shared_ptr<SeqType>{shared_ptr<SeqType>(forward(args)...)};
+        sequences.emplace(pair<string, decltype(ptr)>{name, ptr});
+        return ptr;
     }
 
 private:
-    std::map<std::string, std::shared_ptr<Sequence>> sequences;
+    map<string, shared_ptr<Sequence>> sequences;
 };
 
 
