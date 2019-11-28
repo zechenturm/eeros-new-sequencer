@@ -6,9 +6,11 @@
 #define NEWSEQUENCERPLAYGROUND_SEQUENCER_HPP
 
 #include <memory>
+#include <utility>
 #include <vector>
 #include <map>
-#include "Sequence.hpp"
+#include <thread>
+#include "SequenceHandle.hpp"
 
 class Sequencer {
 public:
@@ -19,12 +21,14 @@ public:
     {
         using namespace std;
         auto ptr = make_shared<SeqType>(forward(args)...);
-        sequences.emplace(pair<string, decltype(ptr)>{name, ptr});
+        auto handle =SequenceHandle{ptr};
+        sequences[name] = move(handle);
+        sequences[name].start();
         return ptr;
     }
 
 private:
-    std::map<std::string, std::shared_ptr<Sequence>> sequences;
+    std::map<std::string, SequenceHandle> sequences;
 };
 
 
