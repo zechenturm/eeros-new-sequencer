@@ -19,7 +19,7 @@ public:
     template <typename SeqType, typename... Args>
     auto constructAndAdd(const string& name, Args&&... args) -> shared_ptr<SeqType>
     {
-        auto ptr = shared_ptr<SeqType>{shared_ptr<SeqType>(forward(args)...)};
+        auto ptr = make_shared<SeqType>(forward(args)...);
         sequences.emplace(pair<string, decltype(ptr)>{name, ptr});
         return ptr;
     }
