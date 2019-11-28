@@ -6,6 +6,7 @@ int main() {
 
     auto s = Sequencer{};
     s.constructAndAdd<Sequence>("test");
+    std::cout << s.exists("test");
     std::cout << s.exists("test2");
     return 0;
 }
