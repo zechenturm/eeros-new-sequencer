@@ -7,7 +7,7 @@
 
 
 class Sequence {
-
+    virtual void action() = 0;
 };
 
 
