@@ -65,14 +65,32 @@ struct SequenceHandle
 
     auto start() -> void
     {
+        using State = SequenceController::State;
         if (thread == nullptr)
         {
             auto seq = this->sequence;
             auto ctlr = this->controller;
             thread = new std::thread{ [seq, ctlr] {
-                ctlr->state = SequenceController::State::running;
-                while (ctlr->state == SequenceController::State::running)
-                    seq->action(ctlr);
+                ctlr->state = State::running;
+                while (ctlr->state != State::done)
+                    switch (ctlr->state.load())
+                    {
+                        case State::idle:
+                            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                            break;
+                        case State::running:
+                            if (!seq->checkEntryCondition())
+                            {
+                                ctlr->state = State::done;
+                                break;
+                            }
+                            seq->action();
+                            if (seq->checkExitCondition())
+                            {
+                                ctlr->state = State::done;
+                            }
+                            break;
+                    }
             }};
         }
     };

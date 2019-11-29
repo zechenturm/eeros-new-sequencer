@@ -10,7 +10,9 @@
 
 class Sequence {
 public:
-    virtual void action(std::shared_ptr<SequenceController> controller) {}
+    virtual void action() {}
+    virtual bool checkEntryCondition() { return true; }
+    virtual bool checkExitCondition() { return false; }
 };
 
 

@@ -5,10 +5,16 @@ class MySequence: public Sequence
 {
 public:
     std::string text = "hello";
-    void action(std::shared_ptr<SequenceController> controller) override
+    int count = 0;
+    void action() override
     {
         std::cout << "hello from action\n";
-        controller->state = SequenceController::State::stopped;
+        count++;
+    }
+
+    bool checkExitCondition() override
+    {
+        return count >= 10;
     }
 };
 

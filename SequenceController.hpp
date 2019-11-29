@@ -10,8 +10,16 @@
 class SequenceController
 {
 public:
-    enum class State {stopped, running};
+    enum class State
+    {
+        idle,
+        running,
+        done
+    };
+
+private:
     std::atomic<State> state;
+    friend class SequenceHandle;
 };
 
 #endif //NEWSEQUENCERPLAYGROUND_SEQUENCECONTROLLER_HPP
