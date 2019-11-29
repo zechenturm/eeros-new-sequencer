@@ -14,7 +14,10 @@
 
 class Sequencer {
 public:
-    auto exists (const std::string& name) -> bool;
+    auto exists (const std::string& name) -> bool
+    {
+        return sequences.count(name) > 0;
+    }
 
     template <typename SeqType, typename ... Args>
     auto add(const std::string& name, Args ... args) -> std::shared_ptr<Sequence>

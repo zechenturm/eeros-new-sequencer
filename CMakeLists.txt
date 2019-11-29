@@ -4,6 +4,6 @@ project(newSequencerPlayground)
 set(CMAKE_CXX_STANDARD 11)
 
 
-add_executable(newSequencerPlayground main.cpp Sequencer.cpp Sequencer.hpp Sequence.hpp SequenceHandle.hpp SequenceInterface.hpp)
+add_executable(newSequencerPlayground main.cpp Sequencer.hpp Sequence.hpp SequenceHandle.hpp SequenceInterface.hpp)
 
 target_link_libraries(newSequencerPlayground pthread)
