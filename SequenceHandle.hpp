@@ -36,7 +36,7 @@ struct SequenceHandle
         old.thread = nullptr;
     }
 
-    SequenceHandle& operator= (const SequenceHandle& rhs)
+    auto operator= (const SequenceHandle& rhs) -> SequenceHandle&
     {
         this->sequence = rhs.sequence;
         this->controller = rhs.controller;
@@ -44,7 +44,7 @@ struct SequenceHandle
         return *this;
     };
 
-    SequenceHandle& operator= (SequenceHandle&& rhs) noexcept
+    auto operator= (SequenceHandle&& rhs) noexcept -> SequenceHandle&
     {
         this->sequence = std::move(rhs.sequence);
         this->controller = std::move(rhs.controller);
@@ -76,10 +76,11 @@ struct SequenceHandle
         }
     }
 
-    static void runSequence(const std::shared_ptr<Sequence>& seq, const std::shared_ptr<SequenceController>& ctlr) {
-        ctlr->state = SequenceController::State::running;
-        while (ctlr->state != SequenceController::State::done)
-            switch (ctlr->state.load())
+    static auto runSequence(const std::shared_ptr<Sequence>& seq, const std::shared_ptr<SequenceController>& controller) -> void
+    {
+        controller->state = SequenceController::State::running;
+        while (controller->state != SequenceController::State::done)
+            switch (controller->state.load())
             {
                 case SequenceController::State::idle:
                     std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -87,13 +88,13 @@ struct SequenceHandle
                 case SequenceController::State::running:
                     if (!seq->checkEntryCondition())
                     {
-                        ctlr->state = SequenceController::State::done;
+                        controller->state = SequenceController::State::done;
                         break;
                     }
                     seq->action();
                     if (seq->checkExitCondition())
                     {
-                        ctlr->state = SequenceController::State::done;
+                        controller->state = SequenceController::State::done;
                     }
                     break;
             }
