@@ -16,15 +16,13 @@ class Sequencer {
 public:
     auto exists (const std::string& name) -> bool;
 
-    template <typename SeqType, typename... Args>
-    auto constructAndAdd(const std::string& name, Args&&... args) -> std::shared_ptr<SeqType>
+    template <typename SeqType, typename ... Args>
+    auto add(const std::string& name, Args ... args) -> std::shared_ptr<Sequence>
     {
-        using namespace std;
-        auto ptr = make_shared<SeqType>(forward(args)...);
-        auto handle =SequenceHandle{ptr};
-        sequences[name] = move(handle);
+        auto sequencePointer = std::make_shared<Sequence>(std::unique_ptr<SequenceInterface>{new SeqType{std::forward(args)...}});
+        sequences.emplace(name, sequencePointer);
         sequences[name].start();
-        return ptr;
+        return sequencePointer;
     }
 
 private:

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Sequencer.hpp"
 
-class MySequence: public Sequence
+class MySequence: public SequenceInterface
 {
 public:
     std::string text = "hello";
@@ -22,9 +22,9 @@ int main() {
     std::cout << "Hello, World!" << std::endl;
 
     auto s = Sequencer{};
-    auto mySequence = s.constructAndAdd<MySequence>("test");
+    auto mySequence = s.add<MySequence>("test");
     std::cout << s.exists("test") << '\n';
     std::cout << s.exists("test2") << '\n';
-    std::cout << mySequence->text << '\n';
+//    std::cout << mySequence-> << '\n';
     return 0;
 }
