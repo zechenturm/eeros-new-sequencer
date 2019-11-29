@@ -17,9 +17,7 @@ public:
         done
     };
 
-private:
     std::atomic<State> state;
-    friend class SequenceHandle;
 };
 
 #endif //NEWSEQUENCERPLAYGROUND_SEQUENCECONTROLLER_HPP
