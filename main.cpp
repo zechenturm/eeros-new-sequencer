@@ -5,9 +5,10 @@ class MySequence: public Sequence
 {
 public:
     std::string text = "hello";
-    void action() override
+    void action(std::shared_ptr<SequenceController> controller) override
     {
         std::cout << "hello from action\n";
+        controller->state = SequenceController::State::stopped;
     }
 };
 

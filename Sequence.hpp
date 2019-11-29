@@ -6,9 +6,11 @@
 #define NEWSEQUENCERPLAYGROUND_SEQUENCE_HPP
 
 
+#include "SequenceController.hpp"
+
 class Sequence {
 public:
-    virtual void action() {}
+    virtual void action(std::shared_ptr<SequenceController> controller) {}
 };
 
 
