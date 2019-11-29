@@ -7,7 +7,6 @@
 
 #include <atomic>
 #include <utility>
-#include <iostream>
 #include "SequenceInterface.hpp"
 
 class Sequence {
@@ -33,7 +32,6 @@ public:
         switch (state.load())
         {
             case State::idle:
-                std::cout << "idle\n";
                 std::this_thread::sleep_for(std::chrono::milliseconds(1000));
                 break;
             case State::running:
@@ -49,7 +47,6 @@ public:
                 }
                 break;
             case State::done:
-                std::cout << "done\n";
                 return true;
         }
         return false;

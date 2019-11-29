@@ -8,8 +8,6 @@
 #include <memory>
 #include <thread>
 #include "Sequence.hpp"
-#include "SequenceController.hpp"
-#include <iostream>
 
 struct SequenceHandle
 {
@@ -59,13 +57,11 @@ struct SequenceHandle
 
     auto start() -> void
     {
-        using State = SequenceController::State;
         if (thread == nullptr)
         {
             auto seq = this->sequence;
             thread = new std::thread{ [seq] {
                 seq->start();
-                std::cout << "running in thread\n";
                 while (!seq->operator()());
             }};
         }
